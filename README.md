@@ -1,4 +1,4 @@
 # ThiTrucTuyenProject
-App mobile thi trực tuyến 
-Sử dụng : 
+App mobile thi trực tuyến
+####Sử dụng : 
 + React native

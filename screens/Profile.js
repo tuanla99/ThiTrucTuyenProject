@@ -46,13 +46,13 @@ export default class Profile extends Component {
 
                 </View>
               <View style={styles.buttons}>
-                <Button title="Tạo bài thi"   />
+                <Button title="Tạo bài thi" onPress={()=> navigation.navigate('AddTest')}  />
               </View >
               <View style={styles.buttons}>
                 <Button title="Thêm câu hỏi" onPress={()=> navigation.navigate('AddQuestion')} />
               </View >
                 <View style={styles.buttons}>
-                    <Button title="Cap nhat thong tin"   />
+                    <Button title="Cap nhat thong tin" onPress={()=> navigation.navigate('EditProfile')}  />
                 </View >
                 <View style={styles.buttons}>
                     <Button title="Doi mat khau" />

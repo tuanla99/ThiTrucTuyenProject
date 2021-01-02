@@ -28,11 +28,11 @@ export default class Register extends Component {
           role:'1'
         }
       }
-    
+
     render() {
-      
+
        const {navigation} = this.props;
-      
+
       const {tenTK,hoTen,email,ngaySinh,trinhDo,password,role} = this.state ;
       const _storeData = async () => {
         try {
@@ -41,7 +41,7 @@ export default class Register extends Component {
           // Error saving data
         }
       };
-     
+
       const register = ()=>{
         axios.post('/api/project3/user/register', {
           tenTK: tenTK,
@@ -65,7 +65,7 @@ export default class Register extends Component {
         .catch(function (error) {
           console.log(error);
         });
-        
+
       }
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -85,7 +85,7 @@ export default class Register extends Component {
                   <TextInput style={styles.textInput}   placeholder='Enter your Username' onChangeText={(userName)=>this.setState({tenTK:userName})} >
                   </TextInput>
                   </View>
-      
+
                   <View style={styles.textInputContainer} >
                   <TextInput style={styles.textInput} textContentType='emailAddress'  placeholder='Enter your Email' onChangeText={(email)=>this.setState({email:email})} >
                   </TextInput>
@@ -99,14 +99,14 @@ export default class Register extends Component {
                 <View style={styles.textInputContainer} >
                   <TextInput style={styles.textInput} secureTextEntry={true} placeholder='Enter your password'onChangeText={(pass)=>this.setState({password:pass})} >
                   </TextInput>
-                  </View> 
-      
+                  </View>
+
                   <TouchableOpacity style={styles.loginButton} onPress={()=> register() }>
                     <Text style={styles.loginButtonTitle}>
                       Register
                     </Text>
                   </TouchableOpacity>
-         
+
                   <View style={{marginTop:30}}>
                     <FontAwesome.Button  style={styles.registerButton} onPress={()=> navigation.navigate("Login")} >
                     <Text style={{fontWeight:'bold',fontSize:16}} >Or Login?</Text>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
       borderRadius:5,
       borderWidth:0.7,
       backgroundColor:"#f0ffff",
-      
+
     },
     loginButton:{
       width:330,
@@ -178,9 +178,8 @@ const styles = StyleSheet.create({
       borderRadius:5 ,
       justifyContent:'center',
       alignItems:'center',
-      
+
     }
-    
+
   });
-  
-  
+

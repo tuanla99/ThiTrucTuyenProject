@@ -19,6 +19,9 @@ import HistoryDetail from './screens/HistoryDetail'
 import Finish from './screens/Finish'
 import AddQuestion from "./screens/AddQuestion"
 import DetailAddQuestion from "./screens/DetailAddQuestion";
+import AddTest from "./screens/AddTest";
+import EditProfile from "./screens/EditProfile";
+import DetailAddTest from "./screens/DetailAddTest";
 
 const pro = createStackNavigator() ;
 function profiles(){
@@ -27,6 +30,10 @@ function profiles(){
             <pro.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
             <pro.Screen name="AddQuestion" component={AddQuestion} options={{title: 'Thêm câu hỏi'  }} />
             <pro.Screen name="DetailAddQuestion" component={DetailAddQuestion} options={{title: 'Thêm câu hỏi'  }} />
+            <pro.Screen name="DetailAddTest" component={DetailAddTest} options={{title: 'Thêm bài thi'  }} />
+            <pro.Screen name="AddTest" component={AddTest} options={{title: 'Thêm bài thi'  }} />
+            <pro.Screen name="EditProfile" component={EditProfile} options={{title: 'Sửa thông tin cá nhân'  }} />
+
         </pro.Navigator>
     )
 }

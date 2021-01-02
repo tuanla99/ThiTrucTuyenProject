@@ -29,7 +29,7 @@ class AddQuestion extends Component {
                     renderItem={({item}) =>
                         <SubjectItem
                             title = {item.name}
-                            onPress={() => navigation.navigate('DetailAddQuestion',{id:item.id,name:item.name, })}
+                            onPress={() => navigation.navigate('DetailAddQuestion',{id:item.id,name:item.name})}
                         />}
                     keyExtractor={(item) => `${item.id}`}
           />
