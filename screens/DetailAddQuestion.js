@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from 'react'
 import {
     FlatList,
     StyleSheet,
@@ -12,15 +12,13 @@ import {
     Keyboard,
     SafeAreaView,
     ScrollView,
-    Alert
-} from "react-native";
-import SubjectItem from "../components/SubjectItem";
-import * as ImagePicker from 'expo-image-picker';
-
+    Alert,
+} from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
 
 class DetailAddQuestion extends Component {
-    constructor(props) {
-        super(props);
+    constructor (props) {
+        super(props)
         this.state = {
             localUri: '',
             content: '',
@@ -29,58 +27,61 @@ class DetailAddQuestion extends Component {
             option3: '',
             option4: '',
             answer: -1,
-            colorA:'#3498db',
-            colorB:'#3498db',
-            colorC:'#3498db',
-            colorD:'#3498db',
-        };
+            colorA: '#3498db',
+            colorB: '#3498db',
+            colorC: '#3498db',
+            colorD: '#3498db',
+        }
     }
 
-    options = {
-        mediaType: 'photo',
-        quality: 1
-    };
     openImagePickerAsync = async () => {
-        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync()
 
         if (permissionResult.granted === false) {
-            alert("Permission to access camera roll is required!");
-            return;
+            alert('Permission to access camera roll is required!')
+            return
         }
 
-        let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        console.log(pickerResult);
+        let pickerResult = await ImagePicker.launchImageLibraryAsync()
+        console.log(pickerResult)
         if (pickerResult.cancelled === true) {
-            return;
+            return
         }
 
-        this.setState({localUri: pickerResult.uri});
+        this.setState({ localUri: pickerResult.uri })
     }
     takePicture = async () => {
-        let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+        let permissionResult = await ImagePicker.requestCameraPermissionsAsync()
 
         if (permissionResult.granted === false) {
-            alert("Permission to access camera roll is required!");
-            return;
+            alert('Permission to access camera roll is required!')
+            return
         }
 
-        let pickerResult = await ImagePicker.launchCameraAsync();
-        console.log(pickerResult);
+        let pickerResult = await ImagePicker.launchCameraAsync()
+        console.log(pickerResult)
         if (pickerResult.cancelled === true) {
-            return;
+            return
         }
 
-        this.setState({localUri: pickerResult.uri});
+        this.setState({ localUri: pickerResult.uri })
     }
     uploadFiles = async () => {
 
-        const {localUri, content, option1, option2, option3, option4, answer}=this.state;
+        const {
+            localUri,
+            content,
+            option1,
+            option2,
+            option3,
+            option4,
+            answer,
+        } = this.state
 
-        let filename = localUri.split('/').pop();
+        let filename = localUri.split('/').pop()
 
-        let match = /\.(\w+)$/.exec(filename);
-        let type = match ? `image/${match[1]}` : `image`;
-
+        let match = /\.(\w+)$/.exec(filename)
+        let type = match ? `image/${match[1]}` : `image`
 
         // let formData = new FormData();
         // formData.append('photo', {uri: localUri, name: filename, type});
@@ -93,42 +94,62 @@ class DetailAddQuestion extends Component {
         //     },
         // });
     }
-    selectOp=(option)=>{
-        const{colorA,colorB,colorC,colorD,answer}=this.state;
-        this.setState({answer:option}) ;
-        switch (option){
+    selectOp = (option) => {
+        const { colorA, colorB, colorC, colorD, answer } = this.state
+        this.setState({ answer: option })
+        switch (option) {
             case 1 :
-                if(colorA == '#3498db'){
-                    this.setState({colorA:'red', colorB:'#3498db', colorC:'#3498db', colorD:'#3498db'});
+                if (colorA == '#3498db') {
+                    this.setState({
+                        colorA: 'red',
+                        colorB: '#3498db',
+                        colorC: '#3498db',
+                        colorD: '#3498db',
+                    })
                 }
 
-                break ;
+                break
             case 2 :
-                if(colorB == '#3498db'){
-                    this.setState({colorA:'#3498db', colorB:'red', colorC:'#3498db', colorD:'#3498db'});
+                if (colorB == '#3498db') {
+                    this.setState({
+                        colorA: '#3498db',
+                        colorB: 'red',
+                        colorC: '#3498db',
+                        colorD: '#3498db',
+                    })
                 }
 
-                break ;
+                break
             case 3 :
-                if(colorC == '#3498db'){
-                    this.setState({colorA:'#3498db', colorB:'#3498db', colorC:'red', colorD:'#3498db'});
+                if (colorC == '#3498db') {
+                    this.setState({
+                        colorA: '#3498db',
+                        colorB: '#3498db',
+                        colorC: 'red',
+                        colorD: '#3498db',
+                    })
                 }
 
-                break ;
+                break
             case 4 :
-                if(colorD == '#3498db'){
-                    this.setState({colorA:'#3498db', colorB:'#3498db', colorC:'#3498db', colorD:'red'});
+                if (colorD == '#3498db') {
+                    this.setState({
+                        colorA: '#3498db',
+                        colorB: '#3498db',
+                        colorC: '#3498db',
+                        colorD: 'red',
+                    })
                 }
 
-                break ;
-
+                break
 
         }
     }
-    render() {
-        const {navigation, route} = this.props;
-        const {id, name} = route.params;
-        const{colorA,colorB,colorC,colorD}=this.state;
+
+    render () {
+        const { navigation, route } = this.props
+        const { id, name } = route.params
+        const { colorA, colorB, colorC, colorD } = this.state
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
@@ -137,10 +158,11 @@ class DetailAddQuestion extends Component {
 
                     <View style={styles.container}>
                         <Text>Môn học: {name}</Text>
-                        <Text style={{marginTop: 20}}>Nhập câu hỏi</Text>
+                        <Text style={{ marginTop: 20 }}>Nhập câu hỏi</Text>
                         <TextInput
                             value={this.state.content}
-                            onChangeText={text => this.setState({content: text})}
+                            onChangeText={text => this.setState(
+                                { content: text })}
                             multiline
                             numberOfLines={2}
                             editable
@@ -148,12 +170,15 @@ class DetailAddQuestion extends Component {
                             style={styles.textInput}
                         />
 
-                        <TouchableOpacity onPress={this.openImagePickerAsync} style={styles.button}>
+                        <TouchableOpacity onPress={this.openImagePickerAsync}
+                                          style={styles.button}>
                             <Text style={styles.buttonText}>Pick a photo</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={this.takePicture} style={styles.button}>
-                            <Text style={styles.buttonText}>Or Take a picture</Text>
+                        <TouchableOpacity onPress={this.takePicture}
+                                          style={styles.button}>
+                            <Text style={styles.buttonText}>Or Take a
+                                picture</Text>
                         </TouchableOpacity>
                         {this.state.localUri !== '' ? (
                             <Image
@@ -166,13 +191,15 @@ class DetailAddQuestion extends Component {
                             <Text>Chưa chọn ảnh nào</Text>
                         )}
 
-                        <Text style={{marginTop: 20}}>Nhập các phương án:</Text>
+                        <Text style={{ marginTop: 20 }}>Nhập các phương
+                            án:</Text>
 
                         <View style={styles.option}>
-                            <Text style={{marginRight: 10}}>A :</Text>
+                            <Text style={{ marginRight: 10 }}>A :</Text>
                             <TextInput
                                 value={this.state.option1}
-                                onChangeText={text => this.setState({option1: text})}
+                                onChangeText={text => this.setState(
+                                    { option1: text })}
                                 multiline
                                 numberOfLines={1}
                                 editable
@@ -182,10 +209,11 @@ class DetailAddQuestion extends Component {
                         </View>
 
                         <View style={styles.option}>
-                            <Text style={{marginRight: 10}}>B :</Text>
+                            <Text style={{ marginRight: 10 }}>B :</Text>
                             <TextInput
                                 value={this.state.option2}
-                                onChangeText={text => this.setState({option2: text})}
+                                onChangeText={text => this.setState(
+                                    { option2: text })}
                                 multiline
                                 numberOfLines={1}
                                 editable
@@ -195,10 +223,11 @@ class DetailAddQuestion extends Component {
                         </View>
 
                         <View style={styles.option}>
-                            <Text style={{marginRight: 10}}>C :</Text>
+                            <Text style={{ marginRight: 10 }}>C :</Text>
                             <TextInput
                                 value={this.state.option3}
-                                onChangeText={text => this.setState({option3: text})}
+                                onChangeText={text => this.setState(
+                                    { option3: text })}
                                 multiline
                                 numberOfLines={1}
                                 editable
@@ -207,10 +236,11 @@ class DetailAddQuestion extends Component {
                             />
                         </View>
                         <View style={styles.option}>
-                            <Text style={{marginRight: 10}}>D :</Text>
+                            <Text style={{ marginRight: 10 }}>D :</Text>
                             <TextInput
                                 value={this.state.option4}
-                                onChangeText={text => this.setState({option4: text})}
+                                onChangeText={text => this.setState(
+                                    { option4: text })}
                                 multiline
                                 numberOfLines={1}
                                 editable
@@ -218,7 +248,6 @@ class DetailAddQuestion extends Component {
                                 style={styles.textInput}
                             />
                         </View>
-
 
 
                         <View>
@@ -255,7 +284,7 @@ class DetailAddQuestion extends Component {
                             color="#f194ff"
                             onPress={this.uploadFiles}
                         />
-                </View>
+                    </View>
                 </ScrollView>
 
             </TouchableWithoutFeedback>
@@ -264,7 +293,7 @@ class DetailAddQuestion extends Component {
     }
 }
 
-export default DetailAddQuestion;
+export default DetailAddQuestion
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -285,23 +314,23 @@ const styles = StyleSheet.create({
     thumbnail: {
         width: 300,
         height: 200,
-        resizeMode: "contain"
+        resizeMode: 'contain',
     },
     textInput: {
         borderBottomWidth: 1,
-        width: 300
+        width: 300,
     },
     button: {
         backgroundColor: '#00bfff',
         padding: 10,
         borderRadius: 5,
         width: 250,
-        marginTop: 20
+        marginTop: 20,
     },
     buttonText: {
         fontSize: 20,
         color: '#fff',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     option: {
         flexDirection: 'row',
@@ -312,7 +341,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingLeft: 50,
         paddingRight: 50,
-        marginTop:20,
-        marginBottom:20
-    }
+        marginTop: 20,
+        marginBottom: 20,
+    },
 })
