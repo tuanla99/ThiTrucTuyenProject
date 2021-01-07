@@ -6,11 +6,11 @@
  * @flow strict-local
  */
 import React,{Component,useEffect} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AsyncStorage } from 'react-native';
 import axios from 'axios' ;
+import {BASE_URL} from '../Constants'
 
-
-const apiLogin ='http://192.168.1.62:8082/api/project3/user/login'
+const apiLogin =BASE_URL+'/api/project3/user/login'
 import {
   StyleSheet,
   View,
@@ -30,63 +30,66 @@ export default class Login extends Component{
     super(props) ;
     this.state={
       userName: '',
-      password:'',
-      role:''
+      password:''
     }
   }
+login =() =>{
+       // this.getStorage();
 
+      if(this.state.password != '' && this.state.phone!=''){
+
+            axios.post(apiLogin, null,{
+                params:{
+                    username: this.state.userName,
+			        password: this.state.password
+                }
+            }).then((response) => {
+
+                // this.setStorage('user',JSON.stringify(response && response.data && response.data.data))
+                //     .then(
+                //         this.props.navigation.navigate('Home')
+                //     )
+
+                // this.getStorage()
+              //  Alert.alert('data',''+response);
+
+              console.log('aaaaa',response);
+            }).catch(function (error) {
+                console.log(error);
+                Alert.alert('Bạn đã đăng nhập sai',' hãy thử lại');
+            });
+
+       }else {
+        Alert.alert("Thông báo", "Không được bỏ trống.");
+      }
+
+
+    }
+    setStorage = async (key,value) => {
+		try {
+			await AsyncStorage.setItem(
+				key,
+				value
+			);
+		//	console.log(key+':',value);
+		} catch (error) {
+			// Error saving data
+		}
+	};
+	getStorage = async (key) => {
+		try {
+			const value = await AsyncStorage.getItem(key);
+			if (value !== null) {
+				// We have data!!
+             //   console.log(key+':', value);
+                return value ;
+			}
+		} catch (error) {
+			// Error retrieving data
+		}
+    };
   render(){
-  //
-  //  const _storeData = async () => {
-  //       try {
-  //         await AsyncStorage.setItem('userName',this.state.userName);
-  //       } catch (error) {
-  //         // Error saving data
-  //       }
-  //     };
-  //
-  //
-  //   const {navigation} = this.props ;
-  //    const login = async() => {
-  //
-  //
-  //       if(!this.state.userName || !this.state.password){
-  //           Alert.alert('Thông báo', 'Cần nhập đầy đủ thông tin!');
-  //       }else{
-  //
-  //         let formData = new FormData();
-  //         formData.append('username',this.state.userName );
-  //         formData.append('password', this.state.password);
-  //
-  //               fetch(apiLogin,{
-  //                   headers: {
-  //                     'Content-Type': 'multipart/form-data',
-  //                   },
-  //                   body: formData,
-  //                    method: 'POST',
-  //                 }).then((response) =>  response.json())
-  //                   .then((json) =>{
-  //
-  //                     if(json){
-  //                       _storeData() ;
-  //                         Alert.alert('Thông báo', `Dang nhap thanh cong ! ${json.tenTK}`);
-  //                         navigation.navigate("HomeS");
-  //                     }else{
-  //                       Alert.alert('Thong bao', 'Dang nhap sai');
-  //                     }
-  //
-  //                   })
-  //                   .catch((err) => {
-  //                     Alert.alert('Thong bao','Loi !!!');
-  //
-  //                     console.error(err);
-  //
-  //                   })
-  //
-  //
-  // }
 
-// }
     const {navigation} = this.props ;
          return(
 
@@ -108,7 +111,7 @@ export default class Login extends Component{
               </TextInput>
               </View>
 
-              <TouchableOpacity style={styles.loginButton} onPress={()=> navigation.navigate('Main') }>
+              <TouchableOpacity style={styles.loginButton} onPress={()=> this.login() }>
                 <Text style={styles.loginButtonTitle}>
                   LOGIN
                 </Text>

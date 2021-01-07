@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-    FlatList,
     StyleSheet,
     Text,
     View,
@@ -10,7 +9,6 @@ import {
     TextInput,
     TouchableWithoutFeedback,
     Keyboard,
-    SafeAreaView,
     ScrollView,
     Alert,
 } from 'react-native'

@@ -12,8 +12,9 @@ import {
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
-const apiLogin ='http://192.168.1.62:8082/api/project3/user/register'
+import {BASE_URL} from '../Constants'
+import axios from 'axios'
+const apiRegister =BASE_URL+'/api/project3/user/register'
 
 export default class Register extends Component {
     constructor(props){
@@ -28,45 +29,48 @@ export default class Register extends Component {
           role:'1'
         }
       }
+    register = ()=>{
+        const {tenTK,hoTen,email,ngaySinh,trinhDo,password,role} = this.state ;
+        axios.post(apiRegister, {
+            tenTK: tenTK,
+            hoTen: hoTen,
+            email:email,
+            ngaySinh:ngaySinh,
+            trinhDo:trinhDo,
+            password:password,
+            role:role
+        })
+        .then(function (response) {
+            if(response == 'true'){
+                Alert.alert('Thong bao','Dang ki thanh cong');
+                this._storeData().then(
+                    this.props.navigation.navigate('Home')
+                )
+            }else{
+                Alert.alert('Thong bao','Hay thu lai voi ten tai khoan hoac email khac');
+            }
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
+    }
+     _storeData = async () => {
+        try {
+            await AsyncStorage.setItem('userName',tenTK);
+        } catch (error) {
+            // Error saving data
+        }
+    };
     render() {
 
        const {navigation} = this.props;
 
       const {tenTK,hoTen,email,ngaySinh,trinhDo,password,role} = this.state ;
-      const _storeData = async () => {
-        try {
-          await AsyncStorage.setItem('userName',tenTK);
-        } catch (error) {
-          // Error saving data
-        }
-      };
 
-      const register = ()=>{
-        axios.post('/api/project3/user/register', {
-          tenTK: tenTK,
-          hoTen: hoTen,
-          email:email,
-          ngaySinh:ngaySinh,
-          trinhDo:trinhDo,
-          password:password,
-          role:role
-        })
-        .then(function (response) {
-          if(response == 'true'){
-            _storeData();
-            Alert.alert('Thong bao','Dang ki thanh cong');
-            navigation.navigate('Home');
-          }else{
-            Alert.alert('Thong bao','Hay thu lai voi ten tai khoan hoac email khac');
-          }
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
 
-      }
+
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
